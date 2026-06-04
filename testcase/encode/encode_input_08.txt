@@ -1,0 +1,7 @@
+id,name,category,price,status
+1,keyboard,electronics,250000,available
+2,mouse,electronics,150000,available
+3,monitor,electronics,2500000,out_of_stock
+4,keyboard,electronics,250000,available
+5,mouse,electronics,150000,available
+6,monitor,electronics,2500000,out_of_stock

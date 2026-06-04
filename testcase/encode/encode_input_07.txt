@@ -1,0 +1,3 @@
+Trí tuệ nhân tạo đang được ứng dụng rộng rãi trong giáo dục, y tế và tài chính.
+Các mô hình học máy có thể phân tích dữ liệu lớn để hỗ trợ con người ra quyết định.
+Tuy nhiên, việc xử lý dữ liệu tiếng Việt cần quan tâm đến mã hóa Unicode và dấu thanh.

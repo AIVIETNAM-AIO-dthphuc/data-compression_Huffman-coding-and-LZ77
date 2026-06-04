@@ -1,11 +1,11 @@
-﻿# Mo phong nen du lieu LZ77 va Huffman Coding
+# Mô phỏng nén dữ liệu LZ77 và Huffman Coding
 
-Ung dung Flask nay dung de minh hoa hai thuat toan nen du lieu: LZ77 va Huffman Coding. App co hai luong chinh:
+Ứng dụng Flask này dùng để minh họa hai thuật toán nén dữ liệu: LZ77 và Huffman Coding. App có hai luồng chính:
 
-- Mo phong encode + decode tung buoc: nhap van ban truc tiep hoac upload file `.txt`.
-- Decode tu file XLSX: upload bang token LZ77 hoac bang ma Huffman da co san.
+* Mô phỏng encode + decode từng bước: nhập văn bản trực tiếp hoặc upload file `.txt`.
+* Decode từ file XLSX: upload bảng token LZ77 hoặc bảng mã Huffman đã có sẵn.
 
-## 1. Cau truc thu muc
+## 1. Cấu trúc thư mục
 
 ```text
 E:\CS112 - Seminar
@@ -40,11 +40,11 @@ E:\CS112 - Seminar
             └── decode_Huffman_input_05.csv
 ```
 
-File `.csv` trong testcase Huffman la file cu/doi chieu. Luong upload hien tai nen dung `.xlsx`.
+File `.csv` trong testcase Huffman là file cũ/đối chiếu. Luồng upload hiện tại nên dùng `.xlsx`.
 
-## 2. Cai dat va chay ung dung
+## 2. Cài đặt và chạy ứng dụng
 
-Can co Python va Flask.
+Cần có Python và Flask.
 
 ```bash
 pip install flask
@@ -52,103 +52,103 @@ cd "E:\CS112 - Seminar"
 python app.py
 ```
 
-Mo trinh duyet tai:
+Mở trình duyệt tại:
 
 ```text
 http://127.0.0.1:5000
 ```
 
-## 3. Luong 1: Mo phong encode + decode tung buoc
+## 3. Luồng 1: Mô phỏng encode + decode từng bước
 
-Chon `Mo phong encode + decode tung buoc`, sau do chon mot trong hai thuat toan:
+Chọn `Mô phỏng encode + decode từng bước`, sau đó chọn một trong hai thuật toán:
 
-- Thuat toan LZ77 (Sliding Window)
-- Ma hoa Huffman Coding
+* Thuật toán LZ77 (Sliding Window)
+* Mã hóa Huffman Coding
 
-Nguoi dung co the cung cap input bang mot trong hai cach:
+Người dùng có thể cung cấp input bằng một trong hai cách:
 
-- Nhap truc tiep vao o `Nhap van ban can nen`
-- Upload file `.txt`
+* Nhập trực tiếp vào ô `Nhập văn bản cần nén`
+* Upload file `.txt`
 
-Neu vua nhap tay vua upload `.txt`, app se uu tien noi dung trong file `.txt`.
+Nếu vừa nhập tay vừa upload `.txt`, app sẽ ưu tiên nội dung trong file `.txt`.
 
-### Testcase cho luong encode
+### Testcase cho luồng encode
 
-Dung cac file trong:
+Dùng các file trong:
 
 ```text
 testcase/encode
 ```
 
-Goi y:
+Gợi ý:
 
-- `encode_input_01.txt`, `encode_input_02.txt`, `encode_input_03.txt`: input ngan, phu hop de xem tung buoc.
-- `encode_input_04.txt` va `encode_input_10.txt`: input dai hon, dung de kiem tra che do rut gon khi qua nguong.
-- `encode_input_06.txt` den `encode_input_09.txt`: cac testcase van ban khac nhau, co the dung cho ca LZ77 va Huffman.
-- `encode_input_05..txt` co hai dau cham trong ten file, can chon dung ten khi upload.
+* `encode_input_01.txt`, `encode_input_02.txt`, `encode_input_03.txt`: input ngắn, phù hợp để xem từng bước.
+* `encode_input_04.txt` và `encode_input_10.txt`: input dài hơn, dùng để kiểm tra chế độ rút gọn khi quá ngưỡng.
+* `encode_input_06.txt` đến `encode_input_09.txt`: các testcase văn bản khác nhau, có thể dùng cho cả LZ77 và Huffman.
+* `encode_input_05..txt` có hai dấu chấm trong tên file, cần chọn đúng tên khi upload.
 
-Neu input `<= 500` ky tu, app hien thi tung buoc. Neu input `> 500` ky tu, app chi hien thi cac ket qua chinh de tranh giao dien qua nang.
+Nếu input `<= 500` ký tự, app hiển thị từng bước. Nếu input `> 500` ký tự, app chỉ hiển thị các kết quả chính để tránh giao diện quá nặng.
 
-## 4. LZ77 trong luong mo phong
+## 4. LZ77 trong luồng mô phỏng
 
-Co the cau hinh:
+Có thể cấu hình:
 
-- Search Window
-- Lookahead Window
+* Search Window
+* Lookahead Window
 
-Neu de trong:
+Nếu để trống:
 
 ```text
 Search Window = 13
 Lookahead Window = 6
 ```
 
-Quy tac dang dung:
+Quy tắc đang dùng:
 
 ```text
-Do dai khop toi da l <= Lookahead - 1
+Độ dài khớp tối đa l <= Lookahead - 1
 ```
 
-Ket qua hien thi gom:
+Kết quả hiển thị gồm:
 
-- Mo phong cua so truot theo tung buoc
-- Token duoc them o moi buoc
-- Bang token cuoi cung
-- Bang decode LZ77
-- Ket qua giai ma
+* Mô phỏng cửa sổ trượt theo từng bước
+* Token được thêm ở mỗi bước
+* Bảng token cuối cùng
+* Bảng decode LZ77
+* Kết quả giải mã
 
-Bang decode dai se duoc rut gon theo dang 10 dong dau, mot dong `...`, va 10 dong cuoi.
+Bảng decode dài sẽ được rút gọn theo dạng 10 dòng đầu, một dòng `...`, và 10 dòng cuối.
 
-## 5. Huffman Coding trong luong mo phong
+## 5. Huffman Coding trong luồng mô phỏng
 
-App hien thi:
+App hiển thị:
 
-- Bang tan suat ky tu
-- Qua trinh xay cay Huffman
-- Buoc gan bit tren canh: nhanh trai = `0`, nhanh phai = `1`
-- Bang ma Huffman
-- Chuoi bit sau ma hoa
-- Truc quan hoa decode dua tren bang ma Huffman
-- Ket qua giai ma
-- Ti le nen (Compression Ratio)
+* Bảng tần suất ký tự
+* Quá trình xây cây Huffman
+* Bước gán bit trên cạnh: nhánh trái = `0`, nhánh phải = `1`
+* Bảng mã Huffman
+* Chuỗi bit sau mã hóa
+* Trực quan hóa decode dựa trên bảng mã Huffman
+* Kết quả giải mã
+* Tỉ lệ nén (Compression Ratio)
 
-Quy tac xay cay Huffman:
+Quy tắc xây cây Huffman:
 
-- Hang doi duoc sap tang dan theo so lan xuat hien.
-- Neu bang so lan xuat hien, sap tiep theo ma ASCII.
-- Moi lan lay 2 node dau hang doi: node dau tien dat ben phai, node thu hai dat ben trai.
-- Neu node moi sau khi gop co cung tan suat voi node dang doi, uu tien node dang doi truoc.
+* Hàng đợi được sắp tăng dần theo số lần xuất hiện.
+* Nếu bằng số lần xuất hiện, sắp tiếp theo mã ASCII.
+* Mỗi lần lấy 2 node đầu hàng đợi: node đầu tiên đặt bên phải, node thứ hai đặt bên trái.
+* Nếu node mới sau khi gộp có cùng tần suất với node đang đợi, ưu tiên node đang đợi trước.
 
-Ky tu dac biet duoc hien thi ro:
+Ký tự đặc biệt được hiển thị rõ:
 
 ```text
-space -> ky tu khoang trang
+space -> ký tự khoảng trắng
 \n    -> newline
 \r    -> carriage return
 \t    -> tab
 ```
 
-## 6. Ti le nen Huffman
+## 6. Tỉ lệ nén Huffman
 
 ```text
 Compression Ratio = Uncompressed Size / Compressed Size
@@ -157,106 +157,106 @@ Compression Ratio = Uncompressed Size / Compressed Size
 Trong app:
 
 ```text
-Uncompressed Size = so ky tu input * ceil(log2(so ky tu khac nhau))
-Compressed Size   = so bit sau ma hoa Huffman
+Uncompressed Size = số ký tự input * ceil(log2(số ký tự khác nhau))
+Compressed Size   = số bit sau mã hóa Huffman
 ```
 
-App dung kich thuoc ban dau theo fixed-length encoding, khong mac dinh moi ky tu la 8 bit.
+App dùng kích thước ban đầu theo fixed-length encoding, không mặc định mỗi ký tự là 8 bit.
 
-## 7. Luong 2: Decode tu file XLSX
+## 7. Luồng 2: Decode từ file XLSX
 
-Chon `Decode tu file XLSX`, sau do chon thuat toan va upload file `.xlsx` tu thu muc testcase decode.
+Chọn `Decode từ file XLSX`, sau đó chọn thuật toán và upload file `.xlsx` từ thư mục testcase decode.
 
-App doc sheet dau tien cua file XLSX. Hang dau tien phai la header.
+App đọc sheet đầu tiên của file XLSX. Hàng đầu tiên phải là header.
 
 ## 8. XLSX cho LZ77
 
-Dung cac file mau trong:
+Dùng các file mẫu trong:
 
 ```text
 testcase/decode/lz77
 ```
 
-Danh sach testcase:
+Danh sách testcase:
 
-- `decode_LZ77_input_01.xlsx`
-- `decode_LZ77_input_02.xlsx`
-- `decode_LZ77_input_03.xlsx`
-- `decode_LZ77_input_04.xlsx`
-- `decode_LZ77_input_05.xlsx`
+* `decode_LZ77_input_01.xlsx`
+* `decode_LZ77_input_02.xlsx`
+* `decode_LZ77_input_03.xlsx`
+* `decode_LZ77_input_04.xlsx`
+* `decode_LZ77_input_05.xlsx`
 
-Dinh dang sheet dau tien:
+Định dạng sheet đầu tiên:
 
 | distance | length | next |
-|---:|---:|---|
-| 0 | 0 | a |
-| 0 | 0 | b |
-| 0 | 0 | c |
-| 3 | 2 | d |
+| -------: | -----: | ---- |
+|        0 |      0 | a    |
+|        0 |      0 | b    |
+|        0 |      0 | c    |
+|        3 |      2 | d    |
 
-Y nghia:
+Ý nghĩa:
 
-- `distance`: so ky tu lui lai trong chuoi da khoi phuc.
-- `length`: so ky tu can copy.
-- `next`: ky tu tiep theo.
-- Dung `<space>` neu `next` la dau cach.
-- De trong hoac dung `<EOF>` neu khong co ky tu next.
+* `distance`: số ký tự lùi lại trong chuỗi đã khôi phục.
+* `length`: số ký tự cần copy.
+* `next`: ký tự tiếp theo.
+* Dùng `<space>` nếu `next` là dấu cách.
+* Để trống hoặc dùng `<EOF>` nếu không có ký tự next.
 
 ## 9. XLSX cho Huffman
 
-Dung cac file mau trong:
+Dùng các file mẫu trong:
 
 ```text
 testcase/decode/huffman_coding
 ```
 
-Danh sach testcase:
+Danh sách testcase:
 
-- `decode_Huffman_input_01.xlsx`
-- `decode_Huffman_input_02.xlsx`
-- `decode_Huffman_input_03.xlsx`
-- `decode_Huffman_input_04.xlsx`
-- `decode_Huffman_input_05.xlsx`
+* `decode_Huffman_input_01.xlsx`
+* `decode_Huffman_input_02.xlsx`
+* `decode_Huffman_input_03.xlsx`
+* `decode_Huffman_input_04.xlsx`
+* `decode_Huffman_input_05.xlsx`
 
-Dinh dang sheet dau tien:
+Định dạng sheet đầu tiên:
 
-| encoded_bits | char | code |
-|---|---|---|
-| 010110 |  |  |
-|  | A | 0 |
-|  | B | 10 |
-|  | `<space>` | 110 |
+| encoded_bits | char      | code |
+| ------------ | --------- | ---- |
+| 010110       |           |      |
+|              | A         | 0    |
+|              | B         | 10   |
+|              | `<space>` | 110  |
 
-Y nghia:
+Ý nghĩa:
 
-- `encoded_bits`: chuoi bit can giai ma. Chi can mot dong co gia tri nay.
-- `char`: ky tu goc.
-- `code`: ma Huffman tuong ung voi ky tu.
-- Dung `<space>` trong cot `char` neu ky tu la dau cach.
+* `encoded_bits`: chuỗi bit cần giải mã. Chỉ cần một dòng có giá trị này.
+* `char`: ký tự gốc.
+* `code`: mã Huffman tương ứng với ký tự.
+* Dùng `<space>` trong cột `char` nếu ký tự là dấu cách.
 
-Luu y quan trong: cot `code` nen duoc dinh dang la **Text** trong Excel, neu khong cac ma nhu `0010` co the bi Excel doi thanh `10`.
+Lưu ý quan trọng: cột `code` nên được định dạng là **Text** trong Excel, nếu không các mã như `0010` có thể bị Excel đổi thành `10`.
 
-## 10. Luu y ve file va Unicode
+## 10. Lưu ý về file và Unicode
 
-- File `.txt` nen luu bang UTF-8.
-- File decode nen dung `.xlsx`, khong doi duoi thu cong tu `.csv` hoac `.xls`.
-- Van ban tieng Viet Unicode duoc ho tro.
-- Van ban nhieu dong co the tao ra ky tu `\n` hoac `\r`; cac ky tu nay van duoc tinh trong Huffman va se hien thi ro trong bang.
+* File `.txt` nên lưu bằng UTF-8.
+* File decode nên dùng `.xlsx`, không đổi đuôi thủ công từ `.csv` hoặc `.xls`.
+* Văn bản tiếng Việt Unicode được hỗ trợ.
+* Văn bản nhiều dòng có thể tạo ra ký tự `\n` hoặc `\r`; các ký tự này vẫn được tính trong Huffman và sẽ hiển thị rõ trong bảng.
 
-## 11. Loi thuong gap
+## 11. Lỗi thường gặp
 
-### Khong upload duoc XLSX
+### Không upload được XLSX
 
-Kiem tra file co that su la `.xlsx` hay khong. File `.xls` cu hoac file bi doi duoi thu cong co the khong doc duoc.
+Kiểm tra file có thật sự là `.xlsx` hay không. File `.xls` cũ hoặc file bị đổi đuôi thủ công có thể không đọc được.
 
-### Huffman decode sai voi ma co so 0 dau
+### Huffman decode sai với mã có số 0 đầu
 
-Dinh dang cot `code` trong Excel la **Text** truoc khi nhap ma bit.
+Định dạng cột `code` trong Excel là **Text** trước khi nhập mã bit.
 
-### Khong thay mo phong tung buoc
+### Không thấy mô phỏng từng bước
 
-Input co the da vuot 500 ky tu. Khi do app tu dong rut gon hien thi.
+Input có thể đã vượt 500 ký tự. Khi đó app tự động rút gọn hiển thị.
 
-### O ky tu trong bang Huffman bi trong
+### Ô ký tự trong bảng Huffman bị trống
 
-Neu ky tu la newline/carriage return/tab, app se hien thi `\n`, `\r`, `\t`. Neu van trong, hay kiem tra input co ky tu dieu khien dac biet khac hay khong.
+Nếu ký tự là newline/carriage return/tab, app sẽ hiển thị `\n`, `\r`, `\t`. Nếu vẫn trống, hãy kiểm tra input có ký tự điều khiển đặc biệt khác hay không.
